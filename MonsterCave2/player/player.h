@@ -5,9 +5,33 @@
  *      Author: ander.areizagab
  */
 
+#include <string>
+#include <iostream>
+using namespace std;
+
 #ifndef PLAYER_PLAYER_H_
 #define PLAYER_PLAYER_H_
 
+namespace players{
+	class Player{
+	private:
+		string name;
+		int fuerza;
+		int inteligencia;
+		int carisma;
+		int vida;
+		int numeroDeSalas;
+		int historia[7];
+	public:
+		Player(string name, int fuerza, int inteligencia, int carisma, int vida, int numeroDeSalas, int historia[7]);
+	};
 
+	class Historia{
+	private:
+		string* frases;
+	public:
+		Historia(string* frases);
+	};
+}
 
 #endif /* PLAYER_PLAYER_H_ */
