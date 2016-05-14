@@ -5,6 +5,7 @@
  *      Author: ander.areizagab
  */
 
+#include "player.h"
 #include <string>
 #include <iostream>
 using namespace std;
@@ -17,7 +18,9 @@ namespace players{
 		this->carisma=carisma;
 		this->vida=vida;
 		this->numeroDeSalas=numeroDeSalas;
-		this->historia=historia;
+		for(unsigned int i=0;i<sizeof(historia);i++){
+			this->historia[i]=historia[i];
+		}
 	}
 	Historia::Historia(string* frases){
 		this->frases=frases;

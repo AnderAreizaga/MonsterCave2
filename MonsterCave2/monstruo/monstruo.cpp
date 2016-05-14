@@ -5,6 +5,7 @@
  *      Author: ander.areizagab
  */
 
+#include "monstruo.h"
 #include <string>
 #include <iostream>
 using namespace std;
