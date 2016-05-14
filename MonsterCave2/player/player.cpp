@@ -18,11 +18,13 @@ namespace players{
 		this->carisma=carisma;
 		this->vida=vida;
 		this->numeroDeSalas=numeroDeSalas;
-		for(unsigned int i=0;i<sizeof(historia);i++){
-			this->historia[i]=historia[i];
-		}
+
+	}
+	int Player::getHistoria(int i){
+		return this->historia[i];
 	}
 	Historia::Historia(string* frases){
 		this->frases=frases;
 	}
+
 }

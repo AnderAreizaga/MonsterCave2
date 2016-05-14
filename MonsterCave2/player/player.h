@@ -24,6 +24,7 @@ namespace players{
 		int historia[7];
 	public:
 		Player(string name, int fuerza, int inteligencia, int carisma, int vida, int numeroDeSalas, int historia[7]);
+		int getHistoria(int i);
 	};
 
 	class Historia{
