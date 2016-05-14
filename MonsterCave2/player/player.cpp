@@ -20,8 +20,23 @@ namespace players{
 		this->numeroDeSalas=numeroDeSalas;
 
 	}
+	string Player::getName(){
+		return this->name;
+	}
+	int Player::getVida(){
+		return this->vida;
+	}
+	int Player::getNumeroSalas(){
+		return this->numeroDeSalas;
+	}
 	int Player::getHistoria(int i){
 		return this->historia[i];
+	}
+	void Player::modificarVida(int i){
+		this->vida+=i;
+	}
+	void Player::modificarNumeroSalas(int i){
+		this->numeroDeSalas+=i;
 	}
 	Historia::Historia(string* frases){
 		this->frases=frases;

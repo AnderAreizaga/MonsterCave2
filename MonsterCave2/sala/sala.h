@@ -24,6 +24,10 @@ namespace salas{
 	public:
 		Sala(int codSala, int tipo, int repuestaCorr, string* textosDeSala);
 		void cargarSalas(Sala *puntS);
+		int getCodSala();
+		int getTipo();
+		int getRespuestaCorr();
+		string getTextoSala(int i);
 
 	};
 }

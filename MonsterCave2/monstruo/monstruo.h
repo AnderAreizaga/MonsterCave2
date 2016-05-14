@@ -25,6 +25,10 @@ namespace monstruos{
 		public:
 			Monstruo(string nombre, int codsala, int vida, int ataque, int resistencia, string* interacciones);
 			void inicializarArrayMonstruos(Monstruo* monstruos);
+			string getNombre();
+			int getCodSala();
+			int getVida();
+			string getInteraccion(unsigned int i);
 	};
 }
 

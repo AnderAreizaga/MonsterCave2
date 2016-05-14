@@ -24,4 +24,17 @@ namespace monstruos{
 	void Monstruo::inicializarArrayMonstruos(Monstruo* monstruos){
 
 	}
+	string Monstruo::getNombre(){
+		return this->nombre;
+	}
+
+	int Monstruo::getCodSala(){
+		return this->codsala;
+	}
+	int Monstruo::getVida(){
+		return this->vida;
+	}
+	string Monstruo::getInteraccion(unsigned int i){
+		return this->interacciones[i];
+	}
 }

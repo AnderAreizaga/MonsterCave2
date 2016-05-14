@@ -20,5 +20,17 @@ namespace salas{
 	void Sala::cargarSalas(Sala *puntS){
 
 	}
+	int Sala::getCodSala(){
+		return this->codSala;
+	}
+	int Sala::getTipo(){
+		return this->tipo;
+	}
+	int Sala::getRespuestaCorr(){
+		return this->respuestaCorr;
+	}
+	string Sala::getTextoSala(int i){
+		return this->textosDeSala[i];
+	}
 }
 
