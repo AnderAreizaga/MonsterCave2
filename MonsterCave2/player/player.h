@@ -23,7 +23,7 @@ namespace players{
 		int numeroDeSalas;
 		int historia[7];
 	public:
-		Player(string name, int fuerza, int inteligencia, int carisma, int vida, int numeroDeSalas, int historia[7]);
+		Player(string name);
 		string getName();
 		int getVida();
 		int getNumeroSalas();

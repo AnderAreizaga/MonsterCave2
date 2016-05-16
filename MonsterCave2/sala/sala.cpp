@@ -11,6 +11,12 @@
 using namespace std;
 
 namespace salas{
+	Sala::Sala(){
+		this->codSala=0;
+		this->tipo=0;
+		this->respuestaCorr=0;
+		this->textosDeSala=0;
+	}
 	Sala::Sala(int codSala, int tipo, int repuestaCorr, string* textosDeSala ){
 		this->codSala=codSala;
 		this->tipo=tipo;
@@ -31,6 +37,12 @@ namespace salas{
 	}
 	string Sala::getTextoSala(int i){
 		return this->textosDeSala[i];
+	}
+	void Sala::setCodSala(int codSala){
+		this->codSala=codSala;
+	}
+	void Sala::setTipo(int tipo){
+		this->tipo=tipo;
 	}
 }
 

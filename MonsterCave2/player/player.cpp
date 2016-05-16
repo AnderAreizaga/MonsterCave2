@@ -11,13 +11,13 @@
 using namespace std;
 
 namespace players{
-	Player::Player(string name, int fuerza, int inteligencia, int carisma, int vida, int numeroDeSalas, int historia[7]){
+	Player::Player(string name){
 		this->name=name;
-		this->fuerza=fuerza;
-		this->inteligencia=inteligencia;
-		this->carisma=carisma;
-		this->vida=vida;
-		this->numeroDeSalas=numeroDeSalas;
+		this->fuerza=5;
+		this->inteligencia=5;
+		this->carisma=5;
+		this->vida=100;
+		this->numeroDeSalas=0;
 
 	}
 	string Player::getName(){

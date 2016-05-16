@@ -22,12 +22,18 @@ namespace salas{
 		//en el caso de sala de monstruos el estado 2 se repite hasta que la vida del monstruo tenga 0 vida
 		//el cambio de sala siempre es aleatorio
 	public:
+		Sala();
 		Sala(int codSala, int tipo, int repuestaCorr, string* textosDeSala);
 		void cargarSalas(Sala *puntS);
 		int getCodSala();
 		int getTipo();
 		int getRespuestaCorr();
 		string getTextoSala(int i);
+		void setCodSala(int codSala);
+		void setTipo(int tipo);
+		void setRespuestaCorr(int respuestaCorr);
+		void setTextosDeSala(string* textosDeSala);
+
 
 	};
 }
