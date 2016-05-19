@@ -38,7 +38,16 @@ namespace players{
 	void Player::modificarNumeroSalas(int i){
 		this->numeroDeSalas+=i;
 	}
+	Historia::Historia(){
+		this->frases=0;
+	}
 	Historia::Historia(string* frases){
+		this->frases=frases;
+	}
+	string Historia::getFrase(unsigned int i){
+		return this->frases[i];
+	}
+	void Historia::setFrases(string* frases){
 		this->frases=frases;
 	}
 

@@ -23,9 +23,6 @@ namespace salas{
 		this->respuestaCorr=respuestaCorr;
 		this->textosDeSala=textosDeSala;
 	}
-	void Sala::cargarSalas(Sala *puntS){
-
-	}
 	int Sala::getCodSala(){
 		return this->codSala;
 	}
@@ -43,6 +40,12 @@ namespace salas{
 	}
 	void Sala::setTipo(int tipo){
 		this->tipo=tipo;
+	}
+	void Sala::setRespuestaCorr(int respuestaCorr){
+		this->respuestaCorr=respuestaCorr;
+	}
+	void Sala::setTextosDeSala(string* textosDeSala){
+		this->textosDeSala=textosDeSala;
 	}
 }
 

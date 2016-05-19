@@ -23,12 +23,22 @@ namespace monstruos{
 			int resistencia ;//0 fisico , 1 Fuego , 2 viento , 3 tierra , 4 agua, 5 nada
 			string* interacciones; //Frases que dice el monstruo durante el combate
 		public:
+			Monstruo();
 			Monstruo(string nombre, int codsala, int vida, int ataque, int resistencia, string* interacciones);
-			void inicializarArrayMonstruos(Monstruo* monstruos);
+
 			string getNombre();
 			int getCodSala();
 			int getVida();
+			int getAtaque();
+			int getResistencia();
 			string getInteraccion(unsigned int i);
+
+			void setNombre(string nombre);
+			void setCodSala(int codSala);
+			void setVida(int vida);
+			void setAtaque(int ataque);
+			void setResistencia(int resistencia);
+			void setInteracciones(string* interacciones);
 	};
 }
 

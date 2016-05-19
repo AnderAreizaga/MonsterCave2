@@ -36,7 +36,10 @@ namespace players{
 	private:
 		string* frases;
 	public:
+		Historia();
 		Historia(string* frases);
+		string getFrase(unsigned int i);
+		void setFrases(string* frases);
 	};
 }
 
