@@ -21,7 +21,7 @@ namespace players{
 		int carisma;
 		int vida;
 		int numeroDeSalas;
-		int historia[7];
+		int* historia;
 	public:
 		Player(string name);
 		string getName();
@@ -30,6 +30,7 @@ namespace players{
 		int getHistoria(int i);
 		void modificarVida(int i);
 		void modificarNumeroSalas(int i);
+		void setHistoria(int* historia);
 	};
 
 	class Historia{

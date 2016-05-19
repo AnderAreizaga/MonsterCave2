@@ -18,6 +18,7 @@ namespace players{
 		this->carisma=5;
 		this->vida=100;
 		this->numeroDeSalas=0;
+		this->historia=0;
 
 	}
 	string Player::getName(){
@@ -37,6 +38,9 @@ namespace players{
 	}
 	void Player::modificarNumeroSalas(int i){
 		this->numeroDeSalas+=i;
+	}
+	void Player::setHistoria(int* historia){
+		this->historia=historia;
 	}
 	Historia::Historia(){
 		this->frases=0;

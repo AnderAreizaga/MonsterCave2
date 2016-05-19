@@ -26,10 +26,7 @@ void creaHistoria(Player* p)
 	int x ;
 	int i=0;
 	srand(time(NULL));
-	int historia[7];
-	for(unsigned int i=0;i<sizeof(historia);i++){
-		historia[i]=p->getHistoria(i);
-	}
+	int* historia= new int[7];
 	while (i < 6)
 	{
 		int r = rand() % 14 + 1 ;
@@ -46,23 +43,22 @@ void creaHistoria(Player* p)
 			historia[i++] = r+1;
 		}
 	}
+	p->setHistoria(historia);
 }
 
 void logicaUpdate( Player* p, Sala* s, Monstruo* m)
 {
-	int historia[7];
-	for(unsigned int i=0;i<sizeof(historia);i++){
-		historia[i]=p->getHistoria(i);
-	}
 	// elige una sala aleatoria
-	int numSala = historia[p->getNumeroSalas()];
-
+	int numSala;
+	if(p->getNumeroSalas()<6){
+		numSala = p->getHistoria(p->getNumeroSalas())-1 ;
+	}
 
 	if (p->getNumeroSalas()<= 6)
 	{
 		//A donde quieres ir
 		cout << "¿Por donde deseas ir? N/S/E/W " << endl;
-		char r;
+		char r = '0';
 		while (r != 'N' && r != 'S' && r != 'E' && r != 'W' && r != 'n'
 				&& r != 's' && r != 'e' && r != 'w')
 		{
@@ -394,7 +390,6 @@ int main()
 	pl= new Player(nombre);
 	Historia* h1 = new Historia[30];
 
-
 	//Se crea el jugador
 	Sala* s= new Sala[30];
 
@@ -411,7 +406,7 @@ int main()
 	creaHistoria(pl);
 
 
-	cout << "Life of" << pl->getName() <<"\n" << endl;
+	cout << "Life of " << pl->getName() <<"\n" << endl;
 	sleep(1);
 	cout << "Era una oscura mañana de otoño, " << pl->getName() << " se disponía a empezar su primer dia en su nuevo trabajo." << endl;
 	sleep(1);
