@@ -46,173 +46,6 @@ void creaHistoria(Player* p)
 	p->setHistoria(historia);
 }
 
-void logicaUpdate( Player* p, Sala* s, Monstruo* m)
-{
-	// elige una sala aleatoria
-	int numSala;
-	if(p->getNumeroSalas()<6){
-		numSala = p->getHistoria(p->getNumeroSalas())-1 ;
-	}
-
-	if (p->getNumeroSalas()<= 6)
-	{
-		//A donde quieres ir
-		cout << "¿Por donde deseas ir? N/S/E/W " << endl;
-		char r = '0';
-		while (r != 'N' && r != 'S' && r != 'E' && r != 'W' && r != 'n'
-				&& r != 's' && r != 'e' && r != 'w')
-		{
-
-			cin >> r;
-		}
-
-		if (s[numSala].getTipo() == 0)// Sala de adivinanza
-		{
-			//pasa algo
-			cout << "Inicio sala adivinanza" << endl;
-			sleep(1);
-
-			//supongamos que recibes un array de salas y abres la sala x entonces te aparece un acertijo
-			cout << "Sala " << numSala+1 << "\n"<< s[numSala].getTextoSala(0) << endl;
-			sleep(1);
-			cout << "Opcion 1 " << s[numSala].getTextoSala(3) << endl;
-			cout << "Opcion 2 " << s[numSala].getTextoSala(4) << endl;
-			cout << "Opcion 3 " << s[numSala].getTextoSala(5) << endl;
-			int elec = 0;
-			int corr = (SalaAdivinanza)s[numSala].getRespuestaCorr();
-			do{
-
-
-				cout << "ELIGE TU RESPUESTA CON SABIDURIA (1/2/3): ";
-				cin >> elec;
-				if(corr!=elec)
-				{
-					cout <<  s[numSala].getTextoSala(1) << endl;
-					cout << "Pierdes 20 de vida" << endl;
-					p->modificarVida(-20);
-				}
-
-			}while(elec!=corr);
-			//texto de salida de la
-
-		}
-		else if (s[numSala].getTipo() == 1)//sala de peleas
-		{
-			cout << "Sala " << numSala + 1 << "\n"<< s[numSala].getTextoSala(0) << endl;//Te has encontrado con un mega monstruo feo
-			//Busca el monstruo con el codigo de sala
-			int i = 0;
-			for(;i<5;i++ )//OJOOOO EL  con el numero de monstruos en el array esta en 1 para probar
-			{
-				if(s[numSala].getCodSala() == m[i].getCodSala())
-				{
-					cout << m[i].getCodSala() << endl;
-					break;
-				}
-			}
-
-			int vida = m[i].getVida();
-
-			cout << m[i].getInteraccion(0) << endl;
-			while(vida>0)
-			{
-
-				if(p->getVida()<=0)//Game over
-				{
-					cout << s[numSala].getTextoSala(2) << "/nVaya, parece que tu vida esta a 0" << endl;// Texto de game over
-					char m;
-					cin >> m;
-					break;
-
-				}
-				//Print de la vida
-				cout << m[i].getNombre() << endl;
-				cout << "Vida del monstruo :";
-				int j=0;
-				for(;j<vida/10;j++)
-				{
-					cout << "|";
-				}
-				cout << "\n" << p->getName() << ":";
-
-				int k=0;
-				for(;k<p->getVida()/10;k++)
-				{
-					cout << "|";
-				}
-
-				cout << "\n 1 - Espada de palo      2 - Piro++      \n 3-Hielo++          4 - Cura++       " << endl;
-				cout << " Escoge un arma (1/2/3/4) : ";
-				int eleccion;
-				cin >> eleccion;
-				switch(eleccion)
-				{
-				case 1:
-					vida=vida-5*p->getFuerza();
-					cout << "Dañas al monstruo con tu legendaria espadad de madera, ";
-					sleep(2);
-					p->modificarVida(-10);
-					cout << "sin embargo el monstruo te goplpea y obviamente recibes daño." << endl;
-					sleep(1);
-					break;
-
-				case 2:
-					vida=vida-15;
-					cout << "Conjuras una gran llama, el fuego daña al monstruo, ";
-					p->modificarVida(-7);
-					sleep(2);
-					cout << "te escupe y te da asco, genial, ahora tienes baba de llama." << endl;
-					sleep(1);
-					break;
-				case 3:
-					vida=vida-5;
-					cout << "Enfrias la sala muchisimo, ";
-					sleep(2);
-					p->modificarVida(-3);
-					cout << "genial ahora tienes un resfriado!" << endl;
-					sleep(1);
-					break;
-				case 4:
-					cout << "Aparece un obispo que te echa agua bendita, se curan tus heridas, un poco, mas bien casi nada, digamos que es placebo." << endl;
-					sleep(1);
-					p->modificarVida(20);
-					if(p->getVida()>100)
-					{
-						p->modificarVida(-(p->getVida()-100));
-					}
-					break;
-				default:
-
-					cout << "La proxima vez ataque subnormal" << endl;
-					sleep(2);
-					p->modificarVida(-10);
-					break;
-				}
-			}
-
-		}
-		else if (s[numSala].getTipo() == 2)// sala en la que consigues algo
-
-		{
-			cout << "Sala " << numSala + 1 << "\n" << s[numSala].getTextoSala(0) << endl;
-			p->modificarVida(100);
-			if(p->getVida()>100)
-			{
-				p->modificarVida(-(p->getVida()-100));
-			}
-		}
-
-
-
-	}
-	if(p->getVida()>1)//Victoria
-	{
-		cout << s[numSala].getTextoSala(2) << endl;
-	}
-
-	p->modificarNumeroSalas(1);
-	cout << "Numero de salas pasadas : " << p->getNumeroSalas() << endl;
-
-}
 
 void cargarSalas(Sala *puntS)
 {
@@ -246,10 +79,10 @@ void cargarSalas(Sala *puntS)
 			sala = SalaAdivinanza(codSala,tipo,respuestaCorr,textosDeSala);
 		}
 		else if(tipo == 1){
-			sala = SalaPeleas(codSala,tipo,textosDeSala);
+			sala = SalaPeleas(codSala,tipo,respuestaCorr,textosDeSala);
 		}
 		else if(tipo == 2){
-			sala = SalaObjetos(codSala,tipo,textosDeSala);
+			sala = SalaObjetos(codSala,tipo,respuestaCorr,textosDeSala);
 		}
 		puntS[j] = sala;
 		j++;
@@ -379,8 +212,8 @@ void printHistoria(Player* pl, Historia* historia)
 int main()
 {
 	cout << "Escribe el nombre de tu personaje: ";
-	string nombre;
-	cin >> nombre ;
+	string nombre = "Paco";
+//	cin >> nombre ;
 	Player *pl;
 	pl= new Player(nombre);
 	Historia* h1 = new Historia[30];
@@ -420,7 +253,42 @@ int main()
 
 	//	Bucle constante
 	while (pl->getVida()>=1 && pl->getNumeroSalas()<6){
-		logicaUpdate(pl ,s ,monstruos);
+		int numSala;
+			if(pl->getNumeroSalas()<6){
+				numSala = pl->getHistoria(pl->getNumeroSalas())-1 ;
+			}
+
+			if (pl->getNumeroSalas()<= 6)
+			{
+				//A donde quieres ir
+				cout << "¿Por donde deseas ir? N/S/E/W " << endl;
+				char r = '0';
+				while (r != 'N' && r != 'S' && r != 'E' && r != 'W' && r != 'n'
+						&& r != 's' && r != 'e' && r != 'w')
+				{
+					r='n';
+//					cin >> r;
+				}
+				if(s[numSala].getTipo()==0){
+					SalaAdivinanza sala = SalaAdivinanza(s[numSala].getCodSala(),s[numSala].getTipo(),s[numSala].getRespuestaCorr(),s[numSala].getTextosSala());
+					sala.logicaUpdate(pl,numSala,monstruos);
+				}
+				else if(s[numSala].getTipo()==1){
+					SalaPeleas sala = SalaPeleas(s[numSala].getCodSala(),s[numSala].getTipo(),s[numSala].getRespuestaCorr(),s[numSala].getTextosSala());
+					sala.logicaUpdate(pl,numSala,monstruos);
+				}
+				else if(s[numSala].getTipo()==2){
+					SalaObjetos sala = SalaObjetos(s[numSala].getCodSala(),s[numSala].getTipo(),s[numSala].getRespuestaCorr(),s[numSala].getTextosSala());
+					sala.logicaUpdate(pl,numSala,monstruos);
+				}
+			}
+			if(pl->getVida()>1)//Victoria
+			{
+				cout << s[numSala].getTextoSala(2) << endl;
+			}
+
+			pl->modificarNumeroSalas(1);
+			cout << "Numero de salas pasadas : " << pl->getNumeroSalas() << endl;
 
 	}
 	if(pl->getVida()<=0){
@@ -431,7 +299,7 @@ int main()
 	}
 
 	printHistoria(pl,h1);
-
+	s[0].~Sala();
 
 	return 0;
 }
