@@ -212,8 +212,8 @@ void printHistoria(Player* pl, Historia* historia)
 int main()
 {
 	cout << "Escribe el nombre de tu personaje: ";
-	string nombre = "Paco";
-//	cin >> nombre ;
+	string nombre;
+	cin >> nombre ;
 	Player *pl;
 	pl= new Player(nombre);
 	Historia* h1 = new Historia[30];
@@ -266,8 +266,7 @@ int main()
 				while (r != 'N' && r != 'S' && r != 'E' && r != 'W' && r != 'n'
 						&& r != 's' && r != 'e' && r != 'w')
 				{
-					r='n';
-//					cin >> r;
+					cin >> r;
 				}
 				if(s[numSala].getTipo()==0){
 					SalaAdivinanza sala = SalaAdivinanza(s[numSala].getCodSala(),s[numSala].getTipo(),s[numSala].getRespuestaCorr(),s[numSala].getTextosSala());
