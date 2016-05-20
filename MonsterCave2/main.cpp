@@ -4,9 +4,9 @@
  *  Created on: 13/5/2016
  *      Author: ander.areizagab
  */
-#include "sala/sala.h"
-#include "player/player.h"
-#include "monstruo/monstruo.h"
+#include "clases/sala.h"
+#include "clases/player.h"
+#include "clases/monstruo.h"
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -79,7 +79,7 @@ void logicaUpdate( Player* p, Sala* s, Monstruo* m)
 			cout << "Opcion 2 " << s[numSala].getTextoSala(4) << endl;
 			cout << "Opcion 3 " << s[numSala].getTextoSala(5) << endl;
 			int elec = 0;
-			int corr = s[numSala].getRespuestaCorr();
+			int corr = (SalaAdivinanza)s[numSala].getRespuestaCorr();
 			do{
 
 
@@ -217,22 +217,22 @@ void logicaUpdate( Player* p, Sala* s, Monstruo* m)
 void cargarSalas(Sala *puntS)
 {
 	int endF=0;
-
+	Sala sala;
 	ifstream sa ("salas.txt");
 	char line[280];
 
 	int j=0;
 	do{
 		sa.getline(line,280);
-		puntS[j].setCodSala(atoi(line));
+		int codSala = atoi(line);
 //		cout << puntS[j].getCodSala() << endl;
 
 		sa.getline(line,280);
-		puntS[j].setTipo(atoi(line));
+		int tipo = atoi(line);
 //		cout << puntS[j].getTipo() << endl;
 
 		sa.getline(line,280);
-		puntS[j].setRespuestaCorr(atoi(line));
+		int respuestaCorr = atoi(line);
 
 		string* textosDeSala = new string[10];
 		int n=0;
@@ -242,8 +242,16 @@ void cargarSalas(Sala *puntS)
 		textosDeSala[n] = str;
 		n++;
 		}while(line[0]!='#');
-		puntS[j].setTextosDeSala(textosDeSala);
-
+		if(tipo == 0){
+			sala = SalaAdivinanza(codSala,tipo,respuestaCorr,textosDeSala);
+		}
+		else if(tipo == 1){
+			sala = SalaPeleas(codSala,tipo,textosDeSala);
+		}
+		else if(tipo == 2){
+			sala = SalaObjetos(codSala,tipo,textosDeSala);
+		}
+		puntS[j] = sala;
 		j++;
 		sa.getline(line,280);
 		if(line[0]=='@'){
@@ -258,7 +266,7 @@ void inicializarArrayMonstruos(Monstruo* monstruos){
 	Monstruo m;
 	char str[200];
 
-	ifstream mons ("monstruo/Monstruos.txt");
+	ifstream mons ("Monstruos.txt");
 	int i=0;
 	int x=0;
 	int z=0;
