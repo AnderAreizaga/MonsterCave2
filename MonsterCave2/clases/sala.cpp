@@ -63,6 +63,9 @@ namespace salas{
 				cout << "Pierdes 20 de vida" << endl;
 				p->modificarVida(-20);
 			}
+			if(p->getVida()<1){
+				break;
+			}
 
 		}while(elec!=corr);
 		//texto de salida de la
