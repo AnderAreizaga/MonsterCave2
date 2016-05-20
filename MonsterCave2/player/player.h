@@ -25,6 +25,7 @@ namespace players{
 	public:
 		Player(string name);
 		string getName();
+		int getFuerza();
 		int getVida();
 		int getNumeroSalas();
 		int getHistoria(int i);

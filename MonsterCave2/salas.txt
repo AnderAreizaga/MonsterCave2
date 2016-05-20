@@ -37,7 +37,7 @@ Yo solo queria mi lat.... *Goblin muere*
 #
 
 5
-3
+2
 0
 Llegas donde un Ada y dice: Hey listen! *Te cura*
 #
@@ -62,7 +62,7 @@ El orco habra muerto pero su peste ha aumentado considerablemente T_T
 #
 
 8
-3
+2
 0
 En medio de la sala se encuentra una amable anciana con un caldero hirviendo. Muy amablemente te invita a acercarte y a probar su sopa. *Te curas*
 #

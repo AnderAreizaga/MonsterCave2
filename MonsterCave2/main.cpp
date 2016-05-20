@@ -29,7 +29,7 @@ void creaHistoria(Player* p)
 	int* historia= new int[7];
 	while (i < 6)
 	{
-		int r = rand() % 14 + 1 ;
+		int r = (rand() % 14 )+ 1 ;
 
 		for (x = 0; x < i; x++)
 		{
@@ -40,7 +40,7 @@ void creaHistoria(Player* p)
 		}
 		if (x == i)
 		{
-			historia[i++] = r+1;
+			historia[i++] = r;
 		}
 	}
 	p->setHistoria(historia);
@@ -73,7 +73,7 @@ void logicaUpdate( Player* p, Sala* s, Monstruo* m)
 			sleep(1);
 
 			//supongamos que recibes un array de salas y abres la sala x entonces te aparece un acertijo
-			cout << "Sala" << numSala << "\n" << s[numSala].getTextoSala(0) << endl;
+			cout << "Sala " << numSala+2 << "\n"<< s[numSala].getTextoSala(0) << endl;
 			sleep(1);
 			cout << "Opcion 1 " << s[numSala].getTextoSala(3) << endl;
 			cout << "Opcion 2 " << s[numSala].getTextoSala(4) << endl;
@@ -84,9 +84,7 @@ void logicaUpdate( Player* p, Sala* s, Monstruo* m)
 
 
 				cout << "ELIGE TU RESPUESTA CON SABIDURIA (1/2/3): ";
-				int elec;
 				cin >> elec;
-				cout << endl;
 				if(corr!=elec)
 				{
 					cout <<  s[numSala].getTextoSala(1) << endl;
@@ -94,14 +92,13 @@ void logicaUpdate( Player* p, Sala* s, Monstruo* m)
 					p->modificarVida(-20);
 				}
 
-			}while(corr!=elec);
+			}while(elec!=corr);
 			//texto de salida de la
-			cout << s[numSala].getTextoSala(2) << endl;
 
 		}
 		else if (s[numSala].getTipo() == 1)//sala de peleas
 		{
-			cout << "Sala " << numSala+2 << "\n" << s[numSala].getTextoSala(0) << endl;//Te has encontrado con un mega monstruo feo
+			cout << "Sala " << numSala + 2 << "\n"<< s[numSala].getTextoSala(0) << endl;//Te has encontrado con un mega monstruo feo
 			//Busca el monstruo con el codigo de sala
 			int i = 0;
 			for(;i<5;i++ )//OJOOOO EL  con el numero de monstruos en el array esta en 1 para probar
@@ -138,7 +135,7 @@ void logicaUpdate( Player* p, Sala* s, Monstruo* m)
 				cout << "\n" << p->getName() << ":";
 
 				int k=0;
-				for(;k<p->getVida();k++)
+				for(;k<p->getVida()/10;k++)
 				{
 					cout << "|";
 				}
@@ -150,7 +147,7 @@ void logicaUpdate( Player* p, Sala* s, Monstruo* m)
 				switch(eleccion)
 				{
 				case 1:
-					vida=vida-20;
+					vida=vida-5*p->getFuerza();
 					cout << "Dañas al monstruo con tu legendaria espadad de madera, ";
 					sleep(2);
 					p->modificarVida(-10);
@@ -191,35 +188,25 @@ void logicaUpdate( Player* p, Sala* s, Monstruo* m)
 					break;
 				}
 			}
-			if(p->getVida()>1)//Game over
-			{
-				cout << "\n" << s->getTextoSala(2) << endl;
-			}
-
-			//texto de salida de la
 
 		}
 		else if (s[numSala].getTipo() == 2)// sala en la que consigues algo
 
 		{
-			cout << "Sala " << numSala + 2 << "\n" << s->getTextoSala(0);
+			cout << "Sala " << numSala + 2 << "\n" << s[numSala].getTextoSala(0) << endl;
 			p->modificarVida(100);
 			if(p->getVida()>100)
 			{
 				p->modificarVida(-(p->getVida()-100));
 			}
-			int k=0;
-			for(;k<p->getVida();k++)
-			{
-				cout << "|";
-				sleep(0.005);
-			}
-
-
 		}
 
 
 
+	}
+	if(p->getVida()>1)//Victoria
+	{
+		cout << s[numSala].getTextoSala(2) << endl;
 	}
 
 	p->modificarNumeroSalas(1);
@@ -357,7 +344,7 @@ void printHistoria(Player* pl, Historia* historia)
 
 	if(hist!=NULL)
 	{
-		cout << "\nLa historia de %s , sera contada por los juglares, pase por la salida para recoger su escrito :)\n" << pl->getName() << endl;
+		cout << "La historia de " << pl->getName()  <<", sera contada por los juglares, pase por la salida para recoger su escrito :)" << endl;
 		hist << "Life of " << pl->getName() << "\n" << endl;
 		hist << "Era una oscura mañana de otoño, " << pl->getName() << " se disponía a empezar su primer dia en su nuevo trabajo.\nEra su oportunidad de servir a la sociedad y por primera vez cumplir su sueño  de ser un héroe,\nalguien que combatiera el mal y salvara al mundo varias veces. Pero sin embargo no era tal\ny como se esperaba, barrer el suelo en la taberna más sucia del barrio no era tan emocionante como pensaba que sería\ncuando le dijeron que su misión principal sería combatir la suciedad con esa escoba. Pero un día unos mercenarios entraron\nmientras él trabajaba, llegaron con el objetivo de cumplir la mision mas dificil que podría\nhaber llegado a los oídos de nuestro protagonista: 'Rescatar la gallina de los huevos dorados'\n"
 				<< endl;

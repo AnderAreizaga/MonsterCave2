@@ -24,6 +24,9 @@ namespace players{
 	string Player::getName(){
 		return this->name;
 	}
+	int Player::getFuerza(){
+		return this->fuerza;
+	}
 	int Player::getVida(){
 		return this->vida;
 	}
