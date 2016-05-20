@@ -73,7 +73,7 @@ void logicaUpdate( Player* p, Sala* s, Monstruo* m)
 			sleep(1);
 
 			//supongamos que recibes un array de salas y abres la sala x entonces te aparece un acertijo
-			cout << "Sala " << numSala+2 << "\n"<< s[numSala].getTextoSala(0) << endl;
+			cout << "Sala " << numSala+1 << "\n"<< s[numSala].getTextoSala(0) << endl;
 			sleep(1);
 			cout << "Opcion 1 " << s[numSala].getTextoSala(3) << endl;
 			cout << "Opcion 2 " << s[numSala].getTextoSala(4) << endl;
@@ -98,7 +98,7 @@ void logicaUpdate( Player* p, Sala* s, Monstruo* m)
 		}
 		else if (s[numSala].getTipo() == 1)//sala de peleas
 		{
-			cout << "Sala " << numSala + 2 << "\n"<< s[numSala].getTextoSala(0) << endl;//Te has encontrado con un mega monstruo feo
+			cout << "Sala " << numSala + 1 << "\n"<< s[numSala].getTextoSala(0) << endl;//Te has encontrado con un mega monstruo feo
 			//Busca el monstruo con el codigo de sala
 			int i = 0;
 			for(;i<5;i++ )//OJOOOO EL  con el numero de monstruos en el array esta en 1 para probar
@@ -193,7 +193,7 @@ void logicaUpdate( Player* p, Sala* s, Monstruo* m)
 		else if (s[numSala].getTipo() == 2)// sala en la que consigues algo
 
 		{
-			cout << "Sala " << numSala + 2 << "\n" << s[numSala].getTextoSala(0) << endl;
+			cout << "Sala " << numSala + 1 << "\n" << s[numSala].getTextoSala(0) << endl;
 			p->modificarVida(100);
 			if(p->getVida()>100)
 			{
@@ -353,13 +353,13 @@ void printHistoria(Player* pl, Historia* historia)
 		{
 			hist << historia[(pl->getHistoria(i)-1)].getFrase(0);
 			if(i==5){
-				hist << historia[(pl->getHistoria(i)-1)].getFrase(1);
+				hist << historia[(pl->getHistoria(i)-1)].getFrase(1) << endl;
 				hist << "Encuentra la salida y vuelve a casa habiendo cumplido su sueño" << endl;
 			}
 			else if(i<pl->getNumeroSalas()-1){
-				hist << historia[(pl->getHistoria(i)-1)].getFrase(1);
+				hist << historia[(pl->getHistoria(i)-1)].getFrase(1) << endl;
 			}else{
-				hist << historia[(pl->getHistoria(i)-1)].getFrase(2);
+				hist << historia[(pl->getHistoria(i)-1)].getFrase(2) << endl;
 			}
 
 		}
