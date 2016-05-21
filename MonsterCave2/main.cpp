@@ -7,6 +7,7 @@
 #include "clases/sala.h"
 #include "clases/player.h"
 #include "clases/monstruo.h"
+#include "clases/PlayerBD.h"
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>

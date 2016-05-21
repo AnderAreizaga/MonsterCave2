@@ -18,7 +18,6 @@ namespace players{
 		string name;
 		int fuerza;
 		int inteligencia;
-		int carisma;
 		int vida;
 		int numeroDeSalas;
 		int* historia;
@@ -31,6 +30,10 @@ namespace players{
 		int getHistoria(int i);
 		void modificarVida(int i);
 		void modificarNumeroSalas(int i);
+		void setFuerza(int a);
+		void setInteligencia(int a);
+		void setVida(int a);
+		void setNumeroSalas(int a);
 		void setHistoria(int* historia);
 	};
 

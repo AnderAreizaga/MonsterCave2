@@ -15,7 +15,6 @@ namespace players{
 		this->name=name;
 		this->fuerza=5;
 		this->inteligencia=5;
-		this->carisma=5;
 		this->vida=100;
 		this->numeroDeSalas=0;
 		this->historia=0;
@@ -35,6 +34,18 @@ namespace players{
 	}
 	int Player::getHistoria(int i){
 		return this->historia[i];
+	}
+	void Player::setFuerza(int a){
+		fuerza=a;
+	}
+	void Player::setInteligencia(int a){
+		inteligencia=a;
+	}
+	void Player::setVida(int a){
+		vida=a;
+	}
+	void Player::setNumeroSalas(int a){
+		numeroDeSalas=a;
 	}
 	void Player::modificarVida(int i){
 		this->vida+=i;
