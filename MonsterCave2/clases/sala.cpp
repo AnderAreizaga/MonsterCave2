@@ -79,7 +79,7 @@ namespace salas{
 		{
 			if(this->getCodSala() == m[i].getCodSala())
 			{
-				cout << m[i].getCodSala() << endl;
+//				cout << m[i].getCodSala() << endl;
 				break;
 			}
 		}
@@ -109,54 +109,91 @@ namespace salas{
 			cout << "\n" << p->getName() << ":";
 
 			int k=0;
-			for(;k<p->getVida()/10;k++)
+			for(;k<p->getVida()/5;k++)
 			{
 				cout << "|";
 			}
-
-			cout << "\n 1 - Espada de palo      2 - Piro++      \n 3-Hielo++          4 - Cura++       " << endl;
+			cout << "\n 1 - Ataque fisico      2 - Piro++      \n 3-Hielo++          4 - Cura++       " << endl;
 			cout << " Escoge un arma (1/2/3/4) : ";
 			int eleccion;
 			cin >> eleccion;
 			switch(eleccion)
 			{
 			case 1:
-				vida=vida-5*p->getFuerza();
-				cout << "Dañas al monstruo con tu legendaria espadad de madera, ";
-				sleep(2);
-				p->modificarVida(-10);
-				cout << "sin embargo el monstruo te goplpea y obviamente recibes daño." << endl;
-				sleep(1);
+				if(m[i].getResistencia()!=0){
+					vida=vida-5*p->getFuerza();
+					cout << "Dañas al monstruo con tu legendario swandwich vegetal, ";
+					sleep(2);
+					p->modificarVida((-5)*m[i].getAtaque());
+					cout << "el monstruo ensuciado por la lechuga te mira mal y te pega una colleja." << endl;
+					sleep(1);
+				}
+				else{
+					cout << "O vaya resulta que tu grandiosa idea de lanzarle migas de pan no ha resultado ser efectivo, ";
+					sleep(2);
+					p->modificarVida((-7)*m[i].getAtaque());
+					vida+=20;
+					cout << "el monstruo se come las migas del pan y se fortalece." << endl;
+				}
 				break;
 
 			case 2:
-				vida=vida-15;
-				cout << "Conjuras una gran llama, el fuego daña al monstruo, ";
-				p->modificarVida(-7);
-				sleep(2);
-				cout << "te escupe y te da asco, genial, ahora tienes baba de llama." << endl;
+				if(m[i].getResistencia()!=1){
+					vida=vida-15;
+					cout << "Conjuras una gran llama, el fuego daña al monstruo, ";
+					p->modificarVida((-5)*m[i].getAtaque());
+					sleep(2);
+					cout << "te escupe y te da asco, genial, ahora tienes baba de llama." << endl;
+				}
+				else{
+					cout << "Conjuras la llama pero, oh vaya, no leiste el libro para principiantes donde ponia que este enemigo era resistente. ";
+					p->modificarVida((-15)*m[i].getAtaque());
+					sleep(2);
+					cout << "La llama rebota en su resistente cuerpo y te la devuelve haciendote el doble de daño." << endl;
+				}
 				sleep(1);
+
 				break;
 			case 3:
-				vida=vida-5;
-				cout << "Enfrias la sala muchisimo, ";
-				sleep(2);
-				p->modificarVida(-3);
-				cout << "genial ahora tienes un resfriado!" << endl;
-				sleep(1);
-				break;
-			case 4:
-				cout << "Aparece un obispo que te echa agua bendita, se curan tus heridas, un poco, mas bien casi nada, digamos que es placebo." << endl;
-				sleep(1);
-				p->modificarVida(20);
-				if(p->getVida()>100)
-				{
-					p->modificarVida(-(p->getVida()-100));
+				if(m[i].getResistencia()!=2){
+					vida=vida-5;
+					cout << "Enfrias la sala muchisimo, ";
+					sleep(2);
+					p->modificarVida((-5)*m[i].getAtaque());
+					cout << "genial ahora tienes un resfriado!" << endl;
+					sleep(1);
+				}
+				else{
+					cout << "Enfrias la sala muchisimo, pero al parecer tu enemigo se ha sacado el traje de santaclaus de la manga, ";
+					sleep(2);
+					p->modificarVida((-5)*m[i].getAtaque());
+					cout << "genial ahora aparte de la gripe santa claus se esta riendo en tu cara, 'FELIZ NAVIDAD!'" << endl;
+					sleep(1);
 				}
 				break;
+			case 4:
+			{
+				srand(time(NULL));
+				int a = rand() % 1 ;
+				if(a == 1){
+					int r = rand() % 4 ;
+					cout << "Aparece un obispo que te echa agua bendita, se curan tus heridas, un poco, mas bien casi nada, digamos que es placebo." << endl;
+					sleep(1);
+					p->modificarVida(10*r);
+					if(p->getVida()>100)
+					{
+						p->modificarVida(-(p->getVida()-100));
+					}
+				}
+				else{
+					cout << "Aparece una bruja con una cesta llena de comida basura, pizzas, hamburguesas etc... cosas ricas :),te la comes pero resulta que estaba envenenada." << endl;
+					sleep(1);
+					p->modificarVida(-10);
+				}
+				break;
+			}
 			default:
-
-				cout << "La proxima vez ataque subnormal" << endl;
+				cout << "Tu pacifismo te llevara a la ruina, mas te vale atacar o abusaran de ti" << endl;
 				sleep(2);
 				p->modificarVida(-10);
 				break;
