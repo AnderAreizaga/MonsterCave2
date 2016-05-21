@@ -2,7 +2,7 @@ Goblin
 4
 100
 3
-5
+3
 Devuelveme mi lata sucio ladron
 %
 Orco
@@ -15,21 +15,28 @@ Orco pegar con palo
 Progenitus
 2
 200
-10
-2
+6
+0
 Goaarrg
 %
 Pekachu
 10
 300
 7
-3
+2
 Puka?Puka?
 %
 SonGoku
 12
 250
-12
-2
+8
+1
 TE DERROTARE FREEZER
+%
+RAGNAROS
+17
+1000
+15
+0
+YOU HAVE AWAKEN ME TOO SOON EXECUTERS
 &

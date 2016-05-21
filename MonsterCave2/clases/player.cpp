@@ -15,7 +15,7 @@ namespace players{
 		this->name=name;
 		this->fuerza=5;
 		this->inteligencia=5;
-		this->vida=100;
+		this->vida=200;
 		this->numeroDeSalas=0;
 		this->historia=0;
 

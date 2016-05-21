@@ -28,7 +28,7 @@ void creaHistoria(Player* p)
 	int i=0;
 	srand(time(NULL));
 	int* historia= new int[7];
-	while (i < 6)
+	while (i < 7)
 	{
 		int r = (rand() % 14 )+ 1 ;
 
@@ -251,15 +251,15 @@ int main()
 	sleep(1);
 	cout << "haber llegado a los oídos de nuestro protagonista: 'Rescatar la gallina de los huevos dorados'" << endl;
 	sleep(1);
-
+	int numSala;
 	//	Bucle constante
-	while (pl->getVida()>=1 && pl->getNumeroSalas()<6){
-		int numSala;
-			if(pl->getNumeroSalas()<6){
+	while (pl->getVida()>=1 && pl->getNumeroSalas()<7){
+
+			if(pl->getNumeroSalas()<7){
 				numSala = pl->getHistoria(pl->getNumeroSalas())-1 ;
 			}
 
-			if (pl->getNumeroSalas()<= 6)
+			if (pl->getNumeroSalas()<= 7)
 			{
 				//A donde quieres ir
 				cout << "¿Por donde deseas ir? N/S/E/W " << endl;
@@ -291,6 +291,34 @@ int main()
 			cout << "Numero de salas pasadas : " << pl->getNumeroSalas() << endl;
 
 	}
+	if(pl->getVida()>=1 &&pl->getNumeroSalas()==7){
+		//MIKEL AQUI VA TU PARTE
+		pl->modificarNumeroSalas(1);
+		cout << "Numero de salas pasadas : " << pl->getNumeroSalas() << endl;
+	}
+	if(pl->getVida()>=1 &&pl->getNumeroSalas()==8){
+		cout << "Despues de muchas salas pasadas, llegas a una sala bastante curiosa.\nEs como si fuese una armeria muy bestia donde pudieses coger lo que quisieses sin ningun tipo de trampa.\n 'Woooooooooow'- Exclama "
+				<< pl->getName() << "\nCorriendo se propone pillar lo mejor para su esbelto cuerpo:\nDe entre todas las armaduras su inteligencia le dice que en vez de coger la de adamantium coja una bolsa de patatas y se la ponga por encima."
+				<< "\n De entre todas las armas en vez del sable laser se propone cambiar sus grandes artes culinarias por un muslo de pollo podrido.\nY por ultimo cambia su baston de aprendiz de mago pooooor.... El SUPER BASTON LEGENDARIO DE ANTONIDAS"
+				<< endl;
+		pl->setFuerza(20);
+		pl->setInteligencia(30);
+		pl->setVida(700);
+		pl->modificarNumeroSalas(1);
+		cout << "Numero de salas pasadas : " << pl->getNumeroSalas() << endl;
+	}
+	if(pl->getVida()>=1 &&pl->getNumeroSalas()==9){
+		numSala = 17;
+		SalaPeleas sala = SalaPeleas(s[numSala].getCodSala(),s[numSala].getTipo(),s[numSala].getRespuestaCorr(),s[numSala].getTextosSala());
+		sala.logicaUpdate(pl,numSala,monstruos);
+		if(pl->getVida()>1)//Victoria
+		{
+			cout << s[numSala].getTextoSala(2) << endl;
+		}
+		pl->modificarNumeroSalas(1);
+		cout << "Numero de salas pasadas : " << pl->getNumeroSalas() << endl;
+	}
+
 	if(pl->getVida()<=0){
 		cout << "----------------- Has perecido, en la cueva de los monstruos ----------------" << endl;
 	}

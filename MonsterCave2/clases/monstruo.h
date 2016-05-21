@@ -20,7 +20,7 @@ namespace monstruos{
 			int codsala;//La sala en la que esta el monstruo
 			int vida;//La vida del monstruo
 			int ataque;//El daño que hace el monstruo
-			int resistencia ;//0 fisico , 1 Fuego , 2 viento , 3 tierra , 4 agua, 5 nada
+			int resistencia ;//0 fisico , 1 Fuego , 2 hielo , 3 nada
 			string* interacciones; //Frases que dice el monstruo durante el combate
 		public:
 			Monstruo();

@@ -73,9 +73,13 @@ namespace salas{
 
 	void SalaPeleas::logicaUpdate(Player* p, int numSala,  Monstruo* m){
 		cout << "Sala " << numSala + 1 << "\n"<< this->getTextoSala(0) << endl;//Te has encontrado con un mega monstruo feo
+		int vidaMax = 200;
+		if(numSala==17){
+			vidaMax = 700;
+		}
 		//Busca el monstruo con el codigo de sala
 		int i = 0;
-		for(;i<5;i++ )//OJOOOO EL  con el numero de monstruos en el array esta en 1 para probar
+		for(;i<6;i++ )//OJOOOO EL  con el numero de monstruos en el array esta en 1 para probar
 		{
 			if(this->getCodSala() == m[i].getCodSala())
 			{
@@ -92,9 +96,7 @@ namespace salas{
 
 			if(p->getVida()<=0)//Game over
 			{
-				cout << this->getTextoSala(2) << "Vaya, parece que tu vida esta a 0" << endl;// Texto de game over
-				char m;
-				cin >> m;
+				cout << this->getTextoSala(1) << endl;// Texto de game over
 				break;
 
 			}
@@ -120,6 +122,7 @@ namespace salas{
 			switch(eleccion)
 			{
 			case 1:
+			{
 				if(m[i].getResistencia()!=0){
 					vida=vida-5*p->getFuerza();
 					cout << "Dañas al monstruo con tu legendario swandwich vegetal, ";
@@ -128,33 +131,39 @@ namespace salas{
 					cout << "el monstruo ensuciado por la lechuga te mira mal y te pega una colleja." << endl;
 					sleep(1);
 				}
-				else{
+				else if(m[i].getResistencia()==0){
 					cout << "O vaya resulta que tu grandiosa idea de lanzarle migas de pan no ha resultado ser efectivo, ";
 					sleep(2);
 					p->modificarVida((-7)*m[i].getAtaque());
 					vida+=20;
 					cout << "el monstruo se come las migas del pan y se fortalece." << endl;
+					sleep(1);
 				}
 				break;
-
+			}
 			case 2:
+			{
 				if(m[i].getResistencia()!=1){
 					vida=vida-5*p->getInteligencia();
 					cout << "Conjuras una gran llama, el fuego daña al monstruo, ";
 					p->modificarVida((-5)*m[i].getAtaque());
 					sleep(2);
 					cout << "te escupe y te da asco, genial, ahora tienes baba de llama." << endl;
+					sleep(1);
 				}
-				else{
+				else if (m[i].getResistencia()==1){
 					cout << "Conjuras la llama pero, oh vaya, no leiste el libro para principiantes donde ponia que este enemigo era resistente. ";
-					p->modificarVida((-15)*m[i].getAtaque());
+					p->modificarVida((-5)*m[i].getAtaque());
 					sleep(2);
 					cout << "La llama rebota en su resistente cuerpo y te la devuelve haciendote el doble de daño." << endl;
+					sleep(1);
 				}
-				sleep(1);
+
 
 				break;
+			}
 			case 3:
+			{
 				if(m[i].getResistencia()!=2){
 					vida=vida-5*p->getInteligencia();
 					cout << "Enfrias la sala muchisimo, ";
@@ -163,7 +172,7 @@ namespace salas{
 					cout << "genial ahora tienes un resfriado!" << endl;
 					sleep(1);
 				}
-				else{
+				else if(m[i].getResistencia()==2){
 					cout << "Enfrias la sala muchisimo, pero al parecer tu enemigo se ha sacado el traje de santaclaus de la manga, ";
 					sleep(2);
 					p->modificarVida((-5)*m[i].getAtaque());
@@ -171,21 +180,22 @@ namespace salas{
 					sleep(1);
 				}
 				break;
+			}
 			case 4:
 			{
 				srand(time(NULL));
-				int a = rand() % 1 ;
-				if(a == 1){
-					int r = rand() % 4 ;
+				int a = rand() % 3 ;
+				if(a == 0 || a==2){
+					int r = (rand() % 5)+1 ;
 					cout << "Aparece un obispo que te echa agua bendita, se curan tus heridas, un poco, mas bien casi nada, digamos que es placebo." << endl;
 					sleep(1);
 					p->modificarVida(10*r);
-					if(p->getVida()>100)
+					if(p->getVida()>vidaMax)
 					{
-						p->modificarVida(-(p->getVida()-100));
+						p->modificarVida(-(p->getVida()-vidaMax));
 					}
 				}
-				else{
+				else if (a==1){
 					cout << "Aparece una bruja con una cesta llena de comida basura, pizzas, hamburguesas etc... cosas ricas :),te la comes pero resulta que estaba envenenada." << endl;
 					sleep(1);
 					p->modificarVida(-10);
@@ -203,10 +213,10 @@ namespace salas{
 
 	void SalaObjetos::logicaUpdate(Player* p, int numSala,  Monstruo* m){
 		cout << "Sala " << numSala + 1 << "\n" << this->getTextoSala(0) << endl;
-		p->modificarVida(100);
-		if(p->getVida()>100)
+		p->modificarVida(200);
+		if(p->getVida()>200)
 		{
-			p->modificarVida(-(p->getVida()-100));
+			p->modificarVida(-(p->getVida()-200));
 		}
 	}
 
