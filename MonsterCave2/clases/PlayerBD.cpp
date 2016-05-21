@@ -7,6 +7,11 @@
 
 #include "PlayerBD.h"
 #include <string>
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+using namespace std;
 
 static int callback(void *NotUsed, int argc, char **argv, char **azColName){
    return 0;
@@ -69,18 +74,85 @@ Player* PlayerBD::cargarPlayer(){
 
 	pl->setHistoria(historia);
 
-	a="delete from Player"
+	a="delete from Player";
 
 	sqlite3_exec(db,a,callback,0,&zErrMsg);
 
 	return pl;
 }
 bool PlayerBD::hayPlayer(){
+	char* a="Select count(*) from Player";
 
+	sqlite3_stmt *stmt;
+
+	sqlite3_prepare_v2(db, a, -1, &stmt, 0);
+	sqlite3_step(stmt);
+
+	if(0==sqlite3_column_int(stmt, 0)){
+		return false;
+	}else{
+		return true;
+	}
 }
 void PlayerBD::savePlayer(Player pl){
 
+	char *zErrMsg = 0;
+	int  rc;
+	char sql[500];
+	char fuerza[3];
+	char inteligencia[3];
+	char vida[4];
+	char numSalas[3];
+	char hist0[4];
+	char hist1[4];
+	char hist2[4];
+	char hist3[4];
+	char hist4[4];
+	char hist5[4];
+	char hist6[4];
+
+	sprintf(fuerza, "%i", pl.getFuerza());
+	sprintf(inteligencia, "%i", pl.getInteligencia());
+	sprintf(vida, "%i", pl.getVida());
+	sprintf(numSalas, "%i", pl.getNumeroSalas());
+	sprintf(hist0, "%i", pl.getHistoria(0));
+	sprintf(hist1, "%i", pl.getHistoria(1));
+	sprintf(hist2, "%i", pl.getHistoria(2));
+	sprintf(hist3, "%i", pl.getHistoria(3));
+	sprintf(hist4, "%i", pl.getHistoria(4));
+	sprintf(hist5, "%i", pl.getHistoria(5));
+	sprintf(hist6, "%i", pl.getHistoria(6));
+
+
+	strcat(sql,"INSERT INTO Player (nombre,fuerza,inteligencia,vida,numSalas,hist0,hist1,hist2,hist3,hist4,hist5,hist6) ");
+	strcat(sql, "values(");
+	strcat(sql,fuerza);
+	strcat(sql, ",");
+	strcat(sql,inteligencia);
+	strcat(sql, ",");
+	strcat(sql,vida);
+	strcat(sql, ",");
+	strcat(sql,numSalas);
+	strcat(sql, ",");
+	strcat(sql,hist0);
+	strcat(sql, ",");
+	strcat(sql,hist1);
+	strcat(sql, ",");
+	strcat(sql,hist2);
+	strcat(sql, ",");
+	strcat(sql,hist3);
+	strcat(sql, ",");
+	strcat(sql,hist4);
+	strcat(sql, ",");
+	strcat(sql,hist5);
+	strcat(sql, ",");
+	strcat(sql,hist6);
+	strcat(sql, ");");
+
+	/* Execute SQL statement */
+	rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
+
 }
 PlayerBD::~PlayerBD(){
-
+	sqlite3_close(db);
 }

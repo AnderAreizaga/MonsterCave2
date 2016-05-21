@@ -25,6 +25,7 @@ namespace players{
 		Player(string name);
 		string getName();
 		int getFuerza();
+		int getInteligencia();
 		int getVida();
 		int getNumeroSalas();
 		int getHistoria(int i);
