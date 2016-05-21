@@ -14,6 +14,14 @@
 #include <time.h>
 #include <iostream>
 #include <fstream>
+#include <iostream>
+#include <string>
+#include <stdlib.h>
+#include <random>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+using namespace std;
 using namespace std;
 using namespace players;
 using namespace salas;
@@ -209,6 +217,230 @@ void printHistoria(Player* pl, Historia* historia)
 
 	hist.close();
 }
+
+//AQUI METO TODO LO DEL BUSCAMINAS PERDON POR LA SUCIEDAD
+//{
+
+
+int bomb_count, checkx, checky;//Campos importantes
+const int sizex = 6, sizey = 6;//Campos importantes
+bool lose;
+class Grid {
+public:
+	bool has_bomb, marked,showed, checked;
+	int closebombs;
+	Grid(void) {
+		has_bomb = false;
+		marked = false;
+		showed = false;
+		checked= false;
+		closebombs=0;
+
+	}
+};
+void closeBombs(Grid board[sizex][sizey], int posx, int posy)
+{
+//	|_|b|b| Comprueba si en los alrededores hay bomba y le da un numero
+//	|_|3|_|
+//	|_|b|_|
+
+	if( posy<sizex && board[posx][posy+1].has_bomb) //abajo                  //	|_|_|_|
+	{                                                                        //	|_|1|_|
+		board[posx][posy].closebombs=board[posx][posy].closebombs+1;         //	|_|+|_|
+	}
+	if( posx<sizex && posy<sizey && board[posx+1][posy+1].has_bomb)//abajo dcha //	|_|_|_|
+	{                                                                           //	|_|1|_|
+		board[posx][posy].closebombs=board[posx][posy].closebombs+1;            //	|_|_|+|
+	}
+	if(posx<sizex && board[posx+1][posy].has_bomb) //dcha                  //	|_|_|_|
+	{                                                                      //	|_|3|+|
+		board[posx][posy].closebombs=board[posx][posy].closebombs+1;       //	|_|_|_|
+	}
+	if(posy<sizex && posy>0 && board[posx+1][posy-1].has_bomb) // arriba dch//	|_|_|+|
+	{                                                                      //	|_|3|_|
+		board[posx][posy].closebombs=board[posx][posy].closebombs+1;       //	|_|_|_|
+	}
+	if( posy>0 && board[posx][posy-1].has_bomb)// arriba                  //	|_|+|_|
+	{                                                                     //	|_|3|_|
+		board[posx][posy].closebombs=board[posx][posy].closebombs+1;      //	|_|_|_|
+	}
+	if(posx>0 && posy<sizey &&board[posx-1][posy+1].has_bomb)//abajo izda   //	|_|_|_|
+	{                                                                       //	|_|3|_|
+		board[posx][posy].closebombs=board[posx][posy].closebombs+1;        //	|+|_|_|
+	}
+	if(posx>0 && board[posx-1][posy].has_bomb)//izda                        //	|_|_|_|
+	{                                                                       //	|+|3|_|
+		board[posx][posy].closebombs=board[posx][posy].closebombs+1;        //	|_|_|_|
+	}
+	if(posx>0 && posy>0 && board[posx-1][posy-1].has_bomb)//arriba izda                //	|+|_|_|
+	{                                                                      //	|_|3|_|
+		board[posx][posy].closebombs=board[posx][posy].closebombs+1;       //	|_|_|_|
+	}
+	board[posx][posy].checked=true;
+
+}
+void drawBoad(Grid board[sizex][sizey])
+{
+	//  _0_1_2_3_4_5_6_7_8_9_
+	// 0|_|_|_|_|_|_|_|_|_|_|
+	// 1|_|_|_|_|_|_|_|_|_|_|
+	// 2|_|_|_|_|_|_|_|_|_|_|
+	// 3|_|_|_|_|_|_|_|_|_|_|
+	// 4|_|_|_|_|_|_|_|_|_|_|
+	// 5|_|_|_|_|_|_|_|_|_|_|
+	// 6|_|_|_|_|_|_|_|_|_|_|
+	// 7|_|_|_|_|_|_|_|_|_|_|
+	// 8|_|_|_|_|_|_|_|_|_|_|
+	// 9|_|_|_|_|_|_|_|_|_|_|
+
+	//This draws the top line
+	cout << " _";
+	for (int i = 0; i < sizex; i++)
+	{
+		cout << i+1 << "_";
+	}
+	cout << endl;
+
+	//This draws the body
+	for (int y = 0; y < sizey; y++)
+	{
+		cout << y+1 << "|";
+		for (int x = 0; x < sizex; x++)
+		{
+			if (board[x][y].has_bomb && board[x][y].showed)
+			{
+				cout << "*|";
+			}
+			else if (board[x][y].marked)
+			{
+				cout << "!|";
+
+			}
+			else if (board[x][y].showed && !board[x][y].has_bomb)
+			{
+				if(board[x][y].checked==false)
+				{
+				closeBombs( board,  x, y);
+				}
+				cout << board[x][y].closebombs<< "|";
+			}
+			else
+			{
+				cout << "_|";
+			}
+		}
+		cout << endl;
+	}
+	cout << endl;
+	cout << " _";
+	for (int i = 0; i < sizex; i++)
+	{
+		cout << i+1 << "_";
+	}
+	cout << endl;
+
+	for (int y = 0; y < sizey; y++)
+		{
+			cout << y+1 << "|";
+			for (int x = 0; x < sizex; x++)
+			{
+//				if (board[x][y].has_bomb && board[x][y].showed)
+//				{
+//					cout << "*|";
+//				}
+				if (board[x][y].has_bomb)
+				{
+					cout << "b|";
+				}
+//				else if (board[x][y].marked)
+//				{
+//					cout << "?|";
+//
+//				}
+//				else if (board[x][y].showed && !board[x][y].has_bomb)
+//				{
+//					cout << board[x][y].closebombs<< "|";
+//				}
+				else
+				{
+					cout << "_|";
+				}
+			}
+			cout << endl;
+		}
+
+
+}
+void logicaBuscaMinas()
+{
+	int health=100;
+	srand(time(NULL));
+	lose = false;
+	bomb_count = 7;
+	checkx = 0;
+	checky = 0;
+	Grid gameboard[sizex][sizey];
+	for (int i = 0; i < bomb_count; i++)
+	{
+		int xpos = rand() % sizex;
+		int ypos = rand() % sizey;
+		if (gameboard[xpos][ypos].has_bomb == false) {
+			gameboard[xpos][ypos].has_bomb = true;
+		}
+		else
+		{
+			i--;
+		}
+	}
+	drawBoad(gameboard);
+	cout << endl;
+	while (lose != true)
+	{
+		char select;
+		cout << "Elige enseñar (S/s) o Marcar (M/m)" << endl;
+		cin >> select;
+		if(select=='S' || select=='s')
+		{
+			cout << "Elige una casilla para enseñar del 1 al"<< sizex +1<<" en el eje x" << endl;
+			cin >> checkx;
+			cout << endl << "Elige una casilla para enseñar del 1 al"<< sizey+1 <<"en el eje y" << endl;
+			cin >> checky;
+			gameboard[checkx - 1][checky - 1].showed = true;
+			if (gameboard[checkx - 1][checky - 1].has_bomb == true)
+			{
+			cout << "Boom!";
+
+			}
+			cout << endl;
+			drawBoad(gameboard);
+			cout << endl;
+		}
+		else if(select=='M' || select=='m')
+		{
+			cout << "Elige una casilla para marcar del 1 al "<< sizex +1<<" en el eje x" << endl;
+			cin >> checkx;
+			cout << endl << "Elige una casilla para enseñar del 1 al "<< sizey+1 <<" en el eje y" << endl;
+			cin >> checky;
+			gameboard[checkx - 1][checky - 1].marked = true;
+			cout << endl;
+			drawBoad(gameboard);
+			cout << endl;
+		}
+
+		else
+		{
+			cout << "Aun quedan bombas..." << endl;
+		}
+
+
+
+
+	}
+
+	cout<<"Victoria";
+}
+//}
+
 
 int main()
 {
