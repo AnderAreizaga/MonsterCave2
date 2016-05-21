@@ -371,9 +371,9 @@ void drawBoad(Grid board[sizex][sizey])
 
 
 }
-void logicaBuscaMinas()
+void logicaBuscaMinas(Player *p, int numSala)
 {
-	int health=100;
+	bool win = false;
 	srand(time(NULL));
 	lose = false;
 	bomb_count = 7;
@@ -408,8 +408,8 @@ void logicaBuscaMinas()
 			gameboard[checkx - 1][checky - 1].showed = true;
 			if (gameboard[checkx - 1][checky - 1].has_bomb == true)
 			{
-			cout << "Boom!";
-
+			cout << "Boom!Cuidado con tu vida";
+			p->setVida(p->getVida()-20);
 			}
 			cout << endl;
 			drawBoad(gameboard);
@@ -430,9 +430,24 @@ void logicaBuscaMinas()
 		else
 		{
 			cout << "Aun quedan bombas..." << endl;
+
 		}
-
-
+		int i = 0;
+		int k=0;
+		for (; i<sizex; i++)
+		{
+			for(;k<sizey; k++)
+			{
+				if(!gameboard[i][k].marked && gameboard[i][k].has_bomb)
+				{
+						break;
+				}
+			}
+			if(!gameboard[i][k].marked && gameboard[i][k].has_bomb)
+			{
+					break;
+			}
+		}
 
 
 	}
@@ -509,10 +524,15 @@ int main()
 					SalaPeleas sala = SalaPeleas(s[numSala].getCodSala(),s[numSala].getTipo(),s[numSala].getRespuestaCorr(),s[numSala].getTextosSala());
 					sala.logicaUpdate(pl,numSala,monstruos);
 				}
-				else if(s[numSala].getTipo()==2){
+				else if(s[numSala].getTipo()==2)
+				{
+					cout<<"Una especie de mecanismo bloquea la puerta, parece que es un panel con celdas para voltear o marcar" <<endl;
+					logicaBuscaMinas(pl, numSala);
 					SalaObjetos sala = SalaObjetos(s[numSala].getCodSala(),s[numSala].getTipo(),s[numSala].getRespuestaCorr(),s[numSala].getTextosSala());
 					sala.logicaUpdate(pl,numSala,monstruos);
 				}
+
+
 			}
 			if(pl->getVida()>1)//Victoria
 			{
