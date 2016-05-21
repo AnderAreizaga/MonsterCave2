@@ -139,7 +139,7 @@ namespace salas{
 
 			case 2:
 				if(m[i].getResistencia()!=1){
-					vida=vida-15;
+					vida=vida-5*p->getInteligencia();
 					cout << "Conjuras una gran llama, el fuego daña al monstruo, ";
 					p->modificarVida((-5)*m[i].getAtaque());
 					sleep(2);
@@ -156,7 +156,7 @@ namespace salas{
 				break;
 			case 3:
 				if(m[i].getResistencia()!=2){
-					vida=vida-5;
+					vida=vida-5*p->getInteligencia();
 					cout << "Enfrias la sala muchisimo, ";
 					sleep(2);
 					p->modificarVida((-5)*m[i].getAtaque());
