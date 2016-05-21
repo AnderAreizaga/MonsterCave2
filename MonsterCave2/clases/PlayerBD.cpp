@@ -44,7 +44,7 @@ Player* PlayerBD::cargarPlayer(){
 
 	Player* pl;
 
-	int* historia= new int[7];
+	int historia[7];
 
 	char *zErrMsg = 0;
 
@@ -56,7 +56,7 @@ Player* PlayerBD::cargarPlayer(){
 
 	int rc = sqlite3_step(stmt);
 
-	new Player(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0)));
+	pl=new Player(string(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0))));
 
 	pl->setFuerza(reinterpret_cast<int>(sqlite3_column_int(stmt, 1)));
 
@@ -66,11 +66,13 @@ Player* PlayerBD::cargarPlayer(){
 
 	pl->setNumeroSalas(reinterpret_cast<int>(sqlite3_column_int(stmt, 4)));
 
-	int i=5;
-	while (i < 12){
-
-		historia[i-5]=reinterpret_cast<int>(sqlite3_column_int(stmt, i));
-	}
+	historia[0]=reinterpret_cast<int>(sqlite3_column_int(stmt, 5));
+	historia[1]=reinterpret_cast<int>(sqlite3_column_int(stmt, 6));
+	historia[2]=reinterpret_cast<int>(sqlite3_column_int(stmt, 7));
+	historia[3]=reinterpret_cast<int>(sqlite3_column_int(stmt, 8));
+	historia[4]=reinterpret_cast<int>(sqlite3_column_int(stmt, 9));
+	historia[5]=reinterpret_cast<int>(sqlite3_column_int(stmt, 10));
+	historia[6]=reinterpret_cast<int>(sqlite3_column_int(stmt, 11));
 
 	pl->setHistoria(historia);
 
@@ -98,7 +100,7 @@ void PlayerBD::savePlayer(Player pl){
 
 	char *zErrMsg = 0;
 	int  rc;
-	char sql[500];
+	char sql[500]="";
 	char fuerza[3];
 	char inteligencia[3];
 	char vida[4];
@@ -125,7 +127,9 @@ void PlayerBD::savePlayer(Player pl){
 
 
 	strcat(sql,"INSERT INTO Player (nombre,fuerza,inteligencia,vida,numSalas,hist0,hist1,hist2,hist3,hist4,hist5,hist6) ");
-	strcat(sql, "values(");
+	strcat(sql, "values('");
+	strcat(sql,pl.getName().c_str());
+	strcat(sql, "',");
 	strcat(sql,fuerza);
 	strcat(sql, ",");
 	strcat(sql,inteligencia);
@@ -148,6 +152,8 @@ void PlayerBD::savePlayer(Player pl){
 	strcat(sql, ",");
 	strcat(sql,hist6);
 	strcat(sql, ");");
+
+	cout<< sql;
 
 	/* Execute SQL statement */
 	rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
