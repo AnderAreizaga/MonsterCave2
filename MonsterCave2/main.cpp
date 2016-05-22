@@ -21,15 +21,35 @@ using namespace players;
 using namespace salas;
 using namespace monstruos;
 
+char res;// para el modo demo
 /*
  * Este metodo crea la historia sin repeticiones
  */
 void creaHistoria(Player* p)
 {
+	//Modo demo
+	cout<<"¿Modo demo? (S/N)"<< endl;
+
+	cin>>res;
+
 	int x ;
 	int i=0;
 	srand(time(NULL));
 	int* historia= new int[7];
+
+
+	if (res=='S'||res=='s')
+	{
+			historia[0]=1;
+			historia[1]=4;
+			historia[2]=5;
+			historia[3]=4;
+			historia[4]=9;
+			historia[5]=6;
+			historia[6]=12;
+	}
+	else
+	{
 	while (i < 7)
 	{
 		int r = (rand() % 14 )+ 1 ;
@@ -45,6 +65,7 @@ void creaHistoria(Player* p)
 		{
 			historia[i++] = r;
 		}
+	}
 	}
 	p->setHistoria(historia);
 }
@@ -217,8 +238,9 @@ void printHistoria(Player* pl, Historia* historia)
 
 
 int bomb_count, checkx, checky;//Campos importantes
-const int sizex = 6, sizey = 6;//Campos importantes
+const int sizex = 4, sizey = 4;//Campos importantes
 bool lose;
+
 class Grid {
 public:
 	bool has_bomb, marked,showed, checked;
@@ -250,7 +272,7 @@ void closeBombs(Grid board[sizex][sizey], int posx, int posy)
 	{                                                                      //	|_|3|+|
 		board[posx][posy].closebombs=board[posx][posy].closebombs+1;       //	|_|_|_|
 	}
-	if(posy<sizex && posy>0 && board[posx+1][posy-1].has_bomb) // arriba dch//	|_|_|+|
+	if(posx<sizex && posy>0 && board[posx+1][posy-1].has_bomb) // arriba dch//	|_|_|+|
 	{                                                                      //	|_|3|_|
 		board[posx][posy].closebombs=board[posx][posy].closebombs+1;       //	|_|_|_|
 	}
@@ -266,7 +288,7 @@ void closeBombs(Grid board[sizex][sizey], int posx, int posy)
 	{                                                                       //	|+|3|_|
 		board[posx][posy].closebombs=board[posx][posy].closebombs+1;        //	|_|_|_|
 	}
-	if(posx>0 && posy>0 && board[posx-1][posy-1].has_bomb)//arriba izda                //	|+|_|_|
+	if(posx>0 && posy>0 && board[posx-1][posy-1].has_bomb)//arriba izda     //	|+|_|_|
 	{                                                                      //	|_|3|_|
 		board[posx][posy].closebombs=board[posx][posy].closebombs+1;       //	|_|_|_|
 	}
@@ -325,34 +347,36 @@ void drawBoad(Grid board[sizex][sizey])
 		}
 		cout << endl;
 	}
-//	cout << endl;
-//	cout << " _";
+	cout << endl;
+	cout << " _";
 //	ESTA PARTE ES PARA DEMOSTRAR QUE HAY BOMBAS
-//	for (int i = 0; i < sizex; i++)
-//	{
-//		cout << i+1 << "_";
-//	}
-//	cout << endl;
+	if(res=='S'||res=='s')
+	{
+	for (int i = 0; i < sizex; i++)
+	{
+		cout << i+1 << "_";
+	}
+	cout << endl;
 
-//	for (int y = 0; y < sizey; y++)
-//		{
-//			cout << y+1 << "|";
-//			for (int x = 0; x < sizex; x++)
-//			{
-//
-//				if (board[x][y].has_bomb)
-//				{
-//					cout << "b|";
-//				}
-//
-//				else
-//				{
-//					cout << "_|";
-//				}
-//			}
-//			cout << endl;
-//		}
+	for (int y = 0; y < sizey; y++)
+		{
+			cout << y+1 << "|";
+			for (int x = 0; x < sizex; x++)
+			{
 
+				if (board[x][y].has_bomb)
+				{
+					cout << "b|";
+				}
+
+				else
+				{
+					cout << "_|";
+				}
+			}
+			cout << endl;
+		}
+	}
 
 }
 void logicaBuscaMinas(Player *p)
@@ -360,7 +384,8 @@ void logicaBuscaMinas(Player *p)
 	bool win = false;
 	srand(time(NULL));
 	lose = false;
-	bomb_count = 7;
+	bomb_count = 3;
+	int bombasRes = bomb_count;
 	checkx = 0;
 	checky = 0;
 	Grid gameboard[sizex][sizey];
@@ -378,22 +403,23 @@ void logicaBuscaMinas(Player *p)
 	}
 	drawBoad(gameboard);
 	cout << endl;
-	while (lose != true || win == true)
+	while (lose != true && win != true)
 	{
 		char select;
 		cout << "Elige enseñar (S/s) o Marcar (M/m)" << endl;
 		cin >> select;
 		if(select=='S' || select=='s')
 		{
-			cout << "Elige una casilla para enseñar del 1 al"<< sizex +1<<" en el eje x" << endl;
+			cout << "Elige una casilla para enseñar del 1 al"<< sizex <<" en el eje x" << endl;
 			cin >> checkx;
-			cout << endl << "Elige una casilla para enseñar del 1 al"<< sizey+1 <<"en el eje y" << endl;
+			cout << endl << "Elige una casilla para enseñar del 1 al"<< sizey <<"en el eje y" << endl;
 			cin >> checky;
 			gameboard[checkx - 1][checky - 1].showed = true;
 
 			if (gameboard[checkx - 1][checky - 1].has_bomb == true)
 			{
 			cout << "Boom!Cuidado con tu vida";
+			bombasRes=bombasRes-1;
 			p->setVida(p->getVida()-20);
 			if (p->getVida()<=0)
 			{
@@ -407,11 +433,15 @@ void logicaBuscaMinas(Player *p)
 		}
 		else if(select=='M' || select=='m')
 		{
-			cout << "Elige una casilla para marcar del 1 al "<< sizex +1<<" en el eje x" << endl;
+			cout << "Elige una casilla para marcar del 1 al "<< sizex <<" en el eje x" << endl;
 			cin >> checkx;
-			cout << endl << "Elige una casilla para enseñar del 1 al "<< sizey+1 <<" en el eje y" << endl;
+			cout << endl << "Elige una casilla para enseñar del 1 al "<< sizey <<" en el eje y" << endl;
 			cin >> checky;
 			gameboard[checkx - 1][checky - 1].marked = true;
+			if(gameboard[checkx - 1][checky - 1].has_bomb)
+			{
+				bombasRes=bombasRes-1;
+			}
 			cout << endl;
 			drawBoad(gameboard);
 			cout << endl;
@@ -421,23 +451,12 @@ void logicaBuscaMinas(Player *p)
 			cout << "Aun quedan bombas..." << endl;
 
 		}
-		int i = 0;
-		int k=0;
-		for (; i<sizex; i++)
+
+
+		if(bombasRes==0)
 		{
-			for(;k<sizey; k++)
-			{
-				if((!gameboard[i][k].marked || !gameboard[i][k].showed) && gameboard[i][k].has_bomb )
-				{
-						break;
-				}
-			}
-			if((!gameboard[i][k].marked || !gameboard[i][k].showed) && gameboard[i][k].has_bomb )
-			{
-					break;
-			}
 			win=true;
-			cout<< "ya no quedan bombas"<<endl;
+			cout<< "ya no quedan bombas!" <<endl;
 		}
 
 
@@ -558,8 +577,11 @@ int main()
 				}
 				else if(s[numSala].getTipo()==2)
 				{
+					if(res=='S'|| res=='s')
+					{
 					cout<<"Una especie de mecanismo bloquea la puerta, parece que es un panel con celdas para voltear o marcar" <<endl;
 					logicaBuscaMinas(pl);
+					}
 					SalaObjetos sala = SalaObjetos(s[numSala].getCodSala(),s[numSala].getTipo(),s[numSala].getRespuestaCorr(),s[numSala].getTextosSala());
 					if(pl->getVida()>0)
 					{
@@ -595,7 +617,7 @@ int main()
 
 	}
 	if(pl->getVida()>=1 &&pl->getNumeroSalas()==7){
-
+		logicaBuscaMinas(pl);
 		pl->modificarNumeroSalas(1);
 		cout << "Numero de salas pasadas : " << pl->getNumeroSalas() << endl;
 	}
