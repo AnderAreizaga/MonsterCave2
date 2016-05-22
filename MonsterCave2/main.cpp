@@ -580,13 +580,16 @@ int main()
 			cout << "Quieres guardar la partida??: (s/n)";
 			char r='0';
 
-			while (r != 'N' && r != 'S' && r  && r != 'n' && r != 's')
-			{
-				cin >> r;
+			if(pl->getVida()>0){
 
-			}
-			if(r=='s'){
-				bd.savePlayer((*pl));
+				while (r != 'N' && r != 'S' && r  && r != 'n' && r != 's')
+				{
+					cin >> r;
+
+				}
+				if(r=='s'){
+					bd.savePlayer((*pl));
+				}
 			}
 
 
