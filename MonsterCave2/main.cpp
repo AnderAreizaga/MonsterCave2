@@ -469,12 +469,14 @@ int main()
 	}
 
 	int menu;
+
 	while(menu != 1){
 		cin >> menu ;
 		if(menu==2 && bd.hayPlayer()){
 			break;
 		}
 	}
+
 	Player *pl;
 	if(menu==1){
 		cout << "Escribe el nombre de tu personaje: ";
@@ -482,7 +484,7 @@ int main()
 		cin >> nombre ;
 		pl= new Player(nombre);
 
-		creaHistoria(pl);
+
 	}
 	else if(menu==2){
 
@@ -491,6 +493,9 @@ int main()
 		cout<<pl->getName() <<" "<<pl->getFuerza()<<" "<<pl->getInteligencia()<<" "<<pl->getHistoria(2);
 
 	}
+
+	creaHistoria(pl);
+
 	Historia* h1 = new Historia[30];
 
 	//Se crea el jugador
