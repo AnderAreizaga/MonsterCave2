@@ -457,11 +457,40 @@ void logicaBuscaMinas(Player *p)
 
 int main()
 {
-	cout << "Escribe el nombre de tu personaje: ";
-	string nombre;
-	cin >> nombre ;
+
+	PlayerBD bd;
+
+	cout << "MONSTER CAVE: \n\n";
+
+	cout << "1. Nueva Partida\n";
+
+	if(bd.hayPlayer()){
+		cout << "2. Cargar Partida\n";
+	}
+
+	int menu;
+	while(menu != 1){
+		cin >> menu ;
+		if(menu==2 && bd.hayPlayer()){
+			break;
+		}
+	}
 	Player *pl;
-	pl= new Player(nombre);
+	if(menu==1){
+		cout << "Escribe el nombre de tu personaje: ";
+		string nombre;
+		cin >> nombre ;
+		pl= new Player(nombre);
+
+		creaHistoria(pl);
+	}
+	else if(menu==2){
+
+		pl=bd.cargarPlayer();
+
+		cout<<pl->getName() <<" "<<pl->getFuerza()<<" "<<pl->getInteligencia()<<" "<<pl->getHistoria(2);
+
+	}
 	Historia* h1 = new Historia[30];
 
 	//Se crea el jugador
@@ -477,25 +506,25 @@ int main()
 	//Se carga la historia
 	cargarHistoria(h1);
 
-	creaHistoria(pl);
+	if(menu==1){
+		cout << "Life of " << pl->getName() <<"\n" << endl;
+		sleep(1);
+		cout << "Era una oscura mañana de otoño, " << pl->getName() << " se disponía a empezar su primer dia en su nuevo trabajo." << endl;
+		sleep(1);
+		cout << "Era su oportunidad de servir a la sociedad y por primera vez cumplir su sueño  de ser un héroe," << endl;
+		sleep(1);
+		cout << "alguien que combatiera el mal y salvara al mundo varias veces. Pero sin embargo no era tal" << endl;
+		sleep(1);
+		cout << "y como se esperaba, barrer el suelo en la taberna más sucia del barrio no era tan emocionante como pensaba que sería" << endl;
+		sleep(1);
+		cout << "cuando le dijeron que su misión principal sería combatir la suciedad con esa escoba. Pero un día unos mercenarios entraron" << endl;
+		sleep(1);
+		cout << "mientras él trabajaba, llegaron con el objetivo de cumplir la mision mas dificil que podría" << endl;
+		sleep(1);
+		cout << "haber llegado a los oídos de nuestro protagonista: 'Rescatar la gallina de los huevos dorados'" << endl;
+		sleep(1);
+	}
 
-
-	cout << "Life of " << pl->getName() <<"\n" << endl;
-	sleep(1);
-	cout << "Era una oscura mañana de otoño, " << pl->getName() << " se disponía a empezar su primer dia en su nuevo trabajo." << endl;
-	sleep(1);
-	cout << "Era su oportunidad de servir a la sociedad y por primera vez cumplir su sueño  de ser un héroe," << endl;
-	sleep(1);
-	cout << "alguien que combatiera el mal y salvara al mundo varias veces. Pero sin embargo no era tal" << endl;
-	sleep(1);
-	cout << "y como se esperaba, barrer el suelo en la taberna más sucia del barrio no era tan emocionante como pensaba que sería" << endl;
-	sleep(1);
-	cout << "cuando le dijeron que su misión principal sería combatir la suciedad con esa escoba. Pero un día unos mercenarios entraron" << endl;
-	sleep(1);
-	cout << "mientras él trabajaba, llegaron con el objetivo de cumplir la mision mas dificil que podría" << endl;
-	sleep(1);
-	cout << "haber llegado a los oídos de nuestro protagonista: 'Rescatar la gallina de los huevos dorados'" << endl;
-	sleep(1);
 	int numSala;
 	//	Bucle constante
 	while (pl->getVida()>=1 && pl->getNumeroSalas()<7){
@@ -542,6 +571,19 @@ int main()
 
 			pl->modificarNumeroSalas(1);
 			cout << "Numero de salas pasadas : " << pl->getNumeroSalas() << endl;
+
+			cout << "Quieres guardar la partida??: (s/n)";
+			char r='0';
+
+			while (r != 'N' && r != 'S' && r  && r != 'n' && r != 's')
+			{
+				cin >> r;
+
+			}
+			if(r=='s'){
+				bd.savePlayer((*pl));
+			}
+
 
 	}
 	if(pl->getVida()>=1 &&pl->getNumeroSalas()==7){

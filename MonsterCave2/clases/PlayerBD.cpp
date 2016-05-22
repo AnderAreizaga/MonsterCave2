@@ -153,8 +153,6 @@ void PlayerBD::savePlayer(Player pl){
 	strcat(sql,hist6);
 	strcat(sql, ");");
 
-	cout<< sql;
-
 	/* Execute SQL statement */
 	rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
 
