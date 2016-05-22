@@ -287,7 +287,7 @@ void drawBoad(Grid board[sizex][sizey])
 	// 8|_|_|_|_|_|_|_|_|_|_|
 	// 9|_|_|_|_|_|_|_|_|_|_|
 
-	//This draws the top line
+
 	cout << " _";
 	for (int i = 0; i < sizex; i++)
 	{
@@ -295,7 +295,7 @@ void drawBoad(Grid board[sizex][sizey])
 	}
 	cout << endl;
 
-	//This draws the body
+
 	for (int y = 0; y < sizey; y++)
 	{
 		cout << y+1 << "|";
@@ -325,43 +325,33 @@ void drawBoad(Grid board[sizex][sizey])
 		}
 		cout << endl;
 	}
-	cout << endl;
-	cout << " _";
-	for (int i = 0; i < sizex; i++)
-	{
-		cout << i+1 << "_";
-	}
-	cout << endl;
+//	cout << endl;
+//	cout << " _";
+//	ESTA PARTE ES PARA DEMOSTRAR QUE HAY BOMBAS
+//	for (int i = 0; i < sizex; i++)
+//	{
+//		cout << i+1 << "_";
+//	}
+//	cout << endl;
 
-	for (int y = 0; y < sizey; y++)
-		{
-			cout << y+1 << "|";
-			for (int x = 0; x < sizex; x++)
-			{
-//				if (board[x][y].has_bomb && board[x][y].showed)
-//				{
-//					cout << "*|";
-//				}
-				if (board[x][y].has_bomb)
-				{
-					cout << "b|";
-				}
-//				else if (board[x][y].marked)
-//				{
-//					cout << "?|";
+//	for (int y = 0; y < sizey; y++)
+//		{
+//			cout << y+1 << "|";
+//			for (int x = 0; x < sizex; x++)
+//			{
 //
-//				}
-//				else if (board[x][y].showed && !board[x][y].has_bomb)
+//				if (board[x][y].has_bomb)
 //				{
-//					cout << board[x][y].closebombs<< "|";
+//					cout << "b|";
 //				}
-				else
-				{
-					cout << "_|";
-				}
-			}
-			cout << endl;
-		}
+//
+//				else
+//				{
+//					cout << "_|";
+//				}
+//			}
+//			cout << endl;
+//		}
 
 
 }
@@ -388,7 +378,7 @@ void logicaBuscaMinas(Player *p)
 	}
 	drawBoad(gameboard);
 	cout << endl;
-	while (lose != true)
+	while (lose != true || win == true)
 	{
 		char select;
 		cout << "Elige enseñar (S/s) o Marcar (M/m)" << endl;
@@ -400,10 +390,16 @@ void logicaBuscaMinas(Player *p)
 			cout << endl << "Elige una casilla para enseñar del 1 al"<< sizey+1 <<"en el eje y" << endl;
 			cin >> checky;
 			gameboard[checkx - 1][checky - 1].showed = true;
+
 			if (gameboard[checkx - 1][checky - 1].has_bomb == true)
 			{
 			cout << "Boom!Cuidado con tu vida";
 			p->setVida(p->getVida()-20);
+			if (p->getVida()<=0)
+			{
+				break;
+				cout<<"No te quedan fuerzas para recibir otra explosion";
+			}
 			}
 			cout << endl;
 			drawBoad(gameboard);
@@ -420,7 +416,6 @@ void logicaBuscaMinas(Player *p)
 			drawBoad(gameboard);
 			cout << endl;
 		}
-
 		else
 		{
 			cout << "Aun quedan bombas..." << endl;
@@ -432,21 +427,30 @@ void logicaBuscaMinas(Player *p)
 		{
 			for(;k<sizey; k++)
 			{
-				if(!gameboard[i][k].marked && gameboard[i][k].has_bomb)
+				if((!gameboard[i][k].marked || !gameboard[i][k].showed) && gameboard[i][k].has_bomb )
 				{
 						break;
 				}
 			}
-			if(!gameboard[i][k].marked && gameboard[i][k].has_bomb)
+			if((!gameboard[i][k].marked || !gameboard[i][k].showed) && gameboard[i][k].has_bomb )
 			{
 					break;
 			}
+			win=true;
+			cout<< "ya no quedan bombas"<<endl;
 		}
 
 
 	}
+	if(win && !lose)
+	{
+		cout<<"click" << endl <<"Bien! la puerta esta abierta"<< endl;
+	}
+	if(lose)
+	{
+		cout<<"Has muerto"<<endl;
+	}
 
-	cout<<"Victoria";
 }
 //}
 
@@ -520,8 +524,13 @@ int main()
 				}
 				else if(s[numSala].getTipo()==2)
 				{
+					cout<<"Una especie de mecanismo bloquea la puerta, parece que es un panel con celdas para voltear o marcar" <<endl;
+					logicaBuscaMinas(pl);
 					SalaObjetos sala = SalaObjetos(s[numSala].getCodSala(),s[numSala].getTipo(),s[numSala].getRespuestaCorr(),s[numSala].getTextosSala());
+					if(pl->getVida()>0)
+					{
 					sala.logicaUpdate(pl,numSala,monstruos);
+					}
 				}
 
 
@@ -536,8 +545,7 @@ int main()
 
 	}
 	if(pl->getVida()>=1 &&pl->getNumeroSalas()==7){
-		cout<<"Una especie de mecanismo bloquea la puerta, parece que es un panel con celdas para voltear o marcar" <<endl;
-		logicaBuscaMinas(pl);
+
 		pl->modificarNumeroSalas(1);
 		cout << "Numero de salas pasadas : " << pl->getNumeroSalas() << endl;
 	}
