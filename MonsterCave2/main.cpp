@@ -14,14 +14,8 @@
 #include <time.h>
 #include <iostream>
 #include <fstream>
-#include <iostream>
 #include <string>
-#include <stdlib.h>
-#include <random>
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-using namespace std;
+
 using namespace std;
 using namespace players;
 using namespace salas;
@@ -371,7 +365,7 @@ void drawBoad(Grid board[sizex][sizey])
 
 
 }
-void logicaBuscaMinas(Player *p, int numSala)
+void logicaBuscaMinas(Player *p)
 {
 	bool win = false;
 	srand(time(NULL));
@@ -526,8 +520,6 @@ int main()
 				}
 				else if(s[numSala].getTipo()==2)
 				{
-					cout<<"Una especie de mecanismo bloquea la puerta, parece que es un panel con celdas para voltear o marcar" <<endl;
-					logicaBuscaMinas(pl, numSala);
 					SalaObjetos sala = SalaObjetos(s[numSala].getCodSala(),s[numSala].getTipo(),s[numSala].getRespuestaCorr(),s[numSala].getTextosSala());
 					sala.logicaUpdate(pl,numSala,monstruos);
 				}
@@ -544,7 +536,8 @@ int main()
 
 	}
 	if(pl->getVida()>=1 &&pl->getNumeroSalas()==7){
-		//MIKEL AQUI VA TU PARTE
+		cout<<"Una especie de mecanismo bloquea la puerta, parece que es un panel con celdas para voltear o marcar" <<endl;
+		logicaBuscaMinas(pl);
 		pl->modificarNumeroSalas(1);
 		cout << "Numero de salas pasadas : " << pl->getNumeroSalas() << endl;
 	}
@@ -560,7 +553,7 @@ int main()
 		cout << "Numero de salas pasadas : " << pl->getNumeroSalas() << endl;
 	}
 	if(pl->getVida()>=1 &&pl->getNumeroSalas()==9){
-		numSala = 17;
+		numSala = 16;
 		SalaPeleas sala = SalaPeleas(s[numSala].getCodSala(),s[numSala].getTipo(),s[numSala].getRespuestaCorr(),s[numSala].getTextosSala());
 		sala.logicaUpdate(pl,numSala,monstruos);
 		if(pl->getVida()>1)//Victoria
