@@ -231,12 +231,12 @@ void printHistoria(Player* pl, Historia* historia)
 		if(pl->getNumeroSalas()>7){
 
 			if(pl->getNumeroSalas()==10){
-				hist << historia[(pl->getHistoria(7)-1)].getFrase(1) << endl;
-				hist << historia[(pl->getHistoria(8)-1)].getFrase(1) << endl;
+				hist << historia[15].getFrase(1) << endl;
+				hist << historia[16].getFrase(1) << endl;
 				hist << "Encuentra la salida y vuelve a casa habiendo cumplido su sueño" << endl;
 			}
 			else{
-				hist << historia[(pl->getHistoria(7)-1)].getFrase(2) << endl;
+				hist << historia[15].getFrase(2) << endl;
 			}
 		}
 	}
