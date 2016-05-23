@@ -219,16 +219,25 @@ void printHistoria(Player* pl, Historia* historia)
 		for(int i=0;i<numSalas;i++)
 		{
 			hist << historia[(pl->getHistoria(i)-1)].getFrase(0);
-			if(i==5){
+			if(i==6){
 				hist << historia[(pl->getHistoria(i)-1)].getFrase(1) << endl;
-				hist << "Encuentra la salida y vuelve a casa habiendo cumplido su sueño" << endl;
 			}
-			else if(i<pl->getNumeroSalas()-1){
+			else if(i<numSalas-1){
 				hist << historia[(pl->getHistoria(i)-1)].getFrase(1) << endl;
 			}else{
 				hist << historia[(pl->getHistoria(i)-1)].getFrase(2) << endl;
 			}
+		}
+		if(pl->getNumeroSalas()>7){
 
+			if(pl->getNumeroSalas()==10){
+				hist << historia[(pl->getHistoria(7)-1)].getFrase(1) << endl;
+				hist << historia[(pl->getHistoria(8)-1)].getFrase(1) << endl;
+				hist << "Encuentra la salida y vuelve a casa habiendo cumplido su sueño" << endl;
+			}
+			else{
+				hist << historia[(pl->getHistoria(7)-1)].getFrase(2) << endl;
+			}
 		}
 	}
 
