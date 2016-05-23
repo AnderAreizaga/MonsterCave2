@@ -74,7 +74,7 @@ namespace salas{
 	void SalaPeleas::logicaUpdate(Player* p, int numSala,  Monstruo* m){
 		cout << "Sala " << numSala + 1 << "\n"<< this->getTextoSala(0) << endl;//Te has encontrado con un mega monstruo feo
 		int vidaMax = 200;
-		if(numSala==16){
+		if(numSala==15){
 			vidaMax = 700;
 		}
 		//Busca el monstruo con el codigo de sala

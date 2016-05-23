@@ -29,7 +29,6 @@ void creaHistoria(Player* p)
 {
 	//Modo demo
 	cout<<"¿Modo demo? (S/N)"<< endl;
-
 	cin>>res;
 
 	int x ;
@@ -213,8 +212,11 @@ void printHistoria(Player* pl, Historia* historia)
 		hist << "Life of " << pl->getName() << "\n" << endl;
 		hist << "Era una oscura mañana de otoño, " << pl->getName() << " se disponía a empezar su primer dia en su nuevo trabajo.\nEra su oportunidad de servir a la sociedad y por primera vez cumplir su sueño  de ser un héroe,\nalguien que combatiera el mal y salvara al mundo varias veces. Pero sin embargo no era tal\ny como se esperaba, barrer el suelo en la taberna más sucia del barrio no era tan emocionante como pensaba que sería\ncuando le dijeron que su misión principal sería combatir la suciedad con esa escoba. Pero un día unos mercenarios entraron\nmientras él trabajaba, llegaron con el objetivo de cumplir la mision mas dificil que podría\nhaber llegado a los oídos de nuestro protagonista: 'Rescatar la gallina de los huevos dorados'\n"
 				<< endl;
-
-		for(int i=0;i<pl->getNumeroSalas();i++)
+		int numSalas = pl->getNumeroSalas();
+		if(numSalas==10){
+			numSalas-=3;
+		}
+		for(int i=0;i<numSalas;i++)
 		{
 			hist << historia[(pl->getHistoria(i)-1)].getFrase(0);
 			if(i==5){
@@ -418,13 +420,13 @@ void logicaBuscaMinas(Player *p)
 
 			if (gameboard[checkx - 1][checky - 1].has_bomb == true)
 			{
-			cout << "Boom!Cuidado con tu vida";
+			cout << "Boom!Cuidado con tu vida" << endl;
 			bombasRes=bombasRes-1;
-			p->setVida(p->getVida()-20);
+			p->modificarVida(-20);
 			if (p->getVida()<=0)
 			{
+				cout<<"No te quedan fuerzas para recibir otra explosion" << endl;
 				break;
-				cout<<"No te quedan fuerzas para recibir otra explosion";
 			}
 			}
 			cout << endl;
@@ -617,7 +619,8 @@ int main()
 
 	}
 	if(pl->getVida()>=1 &&pl->getNumeroSalas()==7){
-		logicaBuscaMinas(pl);
+//		cout<<"Una especie de mecanismo bloquea la puerta, parece que es un panel con celdas para voltear o marcar" <<endl;
+//		logicaBuscaMinas(pl);
 		pl->modificarNumeroSalas(1);
 		cout << "Numero de salas pasadas : " << pl->getNumeroSalas() << endl;
 	}
@@ -633,7 +636,7 @@ int main()
 		cout << "Numero de salas pasadas : " << pl->getNumeroSalas() << endl;
 	}
 	if(pl->getVida()>=1 &&pl->getNumeroSalas()==9){
-		numSala = 16;
+		numSala = 15;
 		SalaPeleas sala = SalaPeleas(s[numSala].getCodSala(),s[numSala].getTipo(),s[numSala].getRespuestaCorr(),s[numSala].getTextosSala());
 		sala.logicaUpdate(pl,numSala,monstruos);
 		if(pl->getVida()>1)//Victoria
